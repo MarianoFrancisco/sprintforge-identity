@@ -1,14 +1,18 @@
 package com.sprintforge.identity.user.infrastructure.adapter.out.persistence;
 
+import com.sprintforge.identity.user.application.port.in.query.GetAllUsersQuery;
 import com.sprintforge.identity.user.application.port.out.persistence.*;
 import com.sprintforge.identity.user.domain.User;
 import com.sprintforge.identity.user.infrastructure.adapter.out.persistence.entity.UserEntity;
 import com.sprintforge.identity.user.infrastructure.adapter.out.persistence.mapper.UserEntityMapper;
 import com.sprintforge.identity.user.infrastructure.adapter.out.persistence.repository.UserJpaRepository;
+import com.sprintforge.identity.user.infrastructure.adapter.out.persistence.specification.UserSpecs;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.NullMarked;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,8 +39,18 @@ public class UserRepository implements
     }
 
     @Override
-    public User findAll() {
-        return null;
+    public List<User> findAll(GetAllUsersQuery query) {
+
+        Specification<UserEntity> spec = UserSpecs.withFilters(
+                query.searchTerm(),
+                query.status(),
+                query.isDeleted()
+        );
+
+        return userJpaRepository.findAll(spec)
+                .stream()
+                .map(UserEntityMapper::toDomain)
+                .toList();
     }
 
     @Override
