@@ -5,12 +5,8 @@ import com.sprintforge.identity.user.application.port.in.query.GetUserById;
 import com.sprintforge.identity.user.domain.User;
 import com.sprintforge.identity.user.infrastructure.adapter.in.rest.dto.UserResponseDTO;
 import com.sprintforge.identity.user.infrastructure.adapter.in.rest.mapper.UserRestMapper;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -41,8 +37,8 @@ public class UserController {
                 .toList();
     }
 
-    @GetMapping
-    public UserResponseDTO getById(@RequestParam UUID id) {
+    @GetMapping("/{id}")
+    public UserResponseDTO getById(@PathVariable UUID id) {
         User user = getUserById.handle(
                 UserRestMapper.toQueryById(id)
         );
