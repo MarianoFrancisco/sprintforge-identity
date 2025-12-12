@@ -16,9 +16,7 @@ import org.jspecify.annotations.NullMarked;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @NullMarked
 @Repository
@@ -66,7 +64,7 @@ public class RoleRepository implements
     @Override
     public Role save(Role role) {
         RoleEntity entity = RoleEntityMapper.toEntity(role);
-        RoleEntity savedEntity = roleJpaRepository.save(entity);
-        return RoleEntityMapper.toDomain(savedEntity);
+        RoleEntity saved = roleJpaRepository.save(entity);
+        return RoleEntityMapper.toDomain(saved);
     }
 }
