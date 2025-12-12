@@ -15,7 +15,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class GetAllRolesImpl implements GetAllRoles {
 
-    private FindAllRoles findAllRoles;
+    private final FindAllRoles findAllRoles;
 
     @Override
     public List<Role> handle(GetAllRolesQuery query) {

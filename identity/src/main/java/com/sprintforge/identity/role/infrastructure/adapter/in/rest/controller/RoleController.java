@@ -81,9 +81,9 @@ public class RoleController {
         return RoleRestMapper.toResponse(role);
     }
 
-    @PatchMapping
+    @PatchMapping("/{id}")
     public RoleResponseDTO updateDetails(
-            @RequestParam UUID id,
+            @PathVariable UUID id,
             @RequestBody @Valid UpdateRoleRequestDTO dto
     ) {
         Role updated = updateRoleDetail.handle(

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @NullMarked
@@ -15,4 +16,6 @@ public interface PermissionJpaRepository extends
     Optional<PermissionEntity> findByCode(String code);
 
     Optional<PermissionEntity> findById(UUID id);
+
+    long countByIdIn(Set<UUID> ids);
 }

@@ -1,6 +1,7 @@
 package com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto;
 
 import java.time.Instant;
+import java.util.Set;
 import java.util.UUID;
 
 public record RoleResponseDTO(
@@ -11,6 +12,7 @@ public record RoleResponseDTO(
         boolean isActive,
         boolean isDeleted,
         Instant createdAt,
-        Instant updatedAt
+        Instant updatedAt,
+        Set<UUID> permissionIds
 ) {
 }

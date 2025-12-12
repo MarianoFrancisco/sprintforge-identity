@@ -9,9 +9,11 @@ public class RoleMapper {
     public Role toDomain(
             CreateRoleCommand command
     ) {
-        return new Role(
+        Role role = new Role(
                 command.name(),
                 command.description()
         );
+        role.setPermissions(command.permissionIds());
+        return role;
     }
 }

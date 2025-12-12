@@ -3,6 +3,7 @@ package com.sprintforge.identity.role.infrastructure.adapter.in.rest.mapper;
 import com.sprintforge.identity.role.application.port.in.command.*;
 import com.sprintforge.identity.role.application.port.in.query.GetAllRolesQuery;
 import com.sprintforge.identity.role.application.port.in.query.GetRoleByIdQuery;
+import com.sprintforge.identity.role.domain.Role;
 import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.CreateRoleRequestDTO;
 import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.RoleResponseDTO;
 import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.UpdateRoleRequestDTO;
@@ -23,11 +24,12 @@ public class RoleRestMapper {
     public CreateRoleCommand toCreateCommand(CreateRoleRequestDTO dto) {
         return new CreateRoleCommand(
                 dto.name(),
-                dto.description()
+                dto.description(),
+                dto.permissionIds()
         );
     }
 
-    public RoleResponseDTO toResponse(com.sprintforge.identity.role.domain.Role role) {
+    public RoleResponseDTO toResponse(Role role) {
         return new RoleResponseDTO(
                 role.getId().value(),
                 role.getName().value(),
@@ -36,7 +38,8 @@ public class RoleRestMapper {
                 role.isActive(),
                 role.isDeleted(),
                 role.getCreatedAt(),
-                role.getUpdatedAt()
+                role.getUpdatedAt(),
+                role.getPermissionIds()
         );
     }
 
@@ -47,7 +50,8 @@ public class RoleRestMapper {
         return new UpdateRoleDetailCommand(
                 id,
                 dto.name(),
-                dto.description()
+                dto.description(),
+                dto.permissionIds()
         );
     }
 

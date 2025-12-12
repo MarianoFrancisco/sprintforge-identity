@@ -1,6 +1,7 @@
 package com.sprintforge.identity.permission.infrastructure.adapter.out.persistence;
 
 import com.sprintforge.identity.permission.application.port.in.query.GetAllPermissionsQuery;
+import com.sprintforge.identity.permission.application.port.out.persistence.CountPermissionsById;
 import com.sprintforge.identity.permission.application.port.out.persistence.FindAllPermissions;
 import com.sprintforge.identity.permission.application.port.out.persistence.FindPermissionByCode;
 import com.sprintforge.identity.permission.application.port.out.persistence.FindPermissionById;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @NullMarked
@@ -24,7 +26,8 @@ import java.util.UUID;
 public class PermissionRepository implements
         FindAllPermissions,
         FindPermissionByCode,
-        FindPermissionById {
+        FindPermissionById,
+        CountPermissionsById {
 
     private final PermissionJpaRepository permissionJpaRepository;
 
@@ -51,5 +54,10 @@ public class PermissionRepository implements
         return permissionJpaRepository.findById(id).map(
                 PermissionEntityMapper::toDomain
         );
+    }
+
+    @Override
+    public long countByIdIn(Set<UUID> ids) {
+        return permissionJpaRepository.countByIdIn(ids);
     }
 }
