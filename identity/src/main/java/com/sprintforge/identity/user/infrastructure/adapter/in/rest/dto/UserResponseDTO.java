@@ -5,7 +5,7 @@ import com.sprintforge.identity.user.domain.valueobject.UserStatus;
 import java.time.Instant;
 import java.util.UUID;
 
-public record UserResponse(
+public record UserResponseDTO(
         UUID id,
         String username,
         String email,
