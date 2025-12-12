@@ -18,7 +18,7 @@ public class Role {
     private RoleName name;
     private RoleDescription description;
 
-    private boolean isDefault;
+    private final boolean isDefault;
     private boolean isActive;
     private boolean isDeleted;
 
@@ -27,13 +27,12 @@ public class Role {
 
     public Role(
             String name,
-            String description,
-            boolean isDefault
+            String description
     ) {
         this.id = new RoleId(randomUUID());
         this.name = new RoleName(name);
         this.description = new RoleDescription(description);
-        this.isDefault = isDefault;
+        this.isDefault = false;
         this.isActive = true;
         this.isDeleted = false;
         Instant now = now();
@@ -45,7 +44,7 @@ public class Role {
             UUID id,
             String name,
             String description,
-            boolean isDefault,
+            Boolean isDefault,
             boolean isActive,
             boolean isDeleted,
             Instant createdAt,
@@ -63,12 +62,10 @@ public class Role {
 
     public void updateDetails(
             String name,
-            String description,
-            boolean isDefault
+            String description
     ) {
         this.name = new RoleName(name);
         this.description = new RoleDescription(description);
-        this.isDefault = isDefault;
         this.updatedAt = now();
     }
 
@@ -101,4 +98,5 @@ public class Role {
         this.isDeleted = true;
         this.updatedAt = now();
     }
+
 }

@@ -11,8 +11,7 @@ public class RoleMapper {
     ) {
         return new Role(
                 command.name(),
-                command.description(),
-                command.isDefault()
+                command.description()
         );
     }
 }

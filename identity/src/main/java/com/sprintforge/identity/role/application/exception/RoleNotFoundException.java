@@ -1,6 +1,8 @@
 package com.sprintforge.identity.role.application.exception;
 
-public class RoleNotFoundException extends RuntimeException {
+import com.sprintforge.identity.common.application.exception.EntityNotFoundException;
+
+public class RoleNotFoundException extends EntityNotFoundException {
     public RoleNotFoundException(String message) {
         super("Rol con identificador " + message + " no encontrado.");
     }

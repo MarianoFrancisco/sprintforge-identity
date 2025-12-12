@@ -5,6 +5,7 @@ import com.sprintforge.identity.role.application.port.in.query.GetAllRolesQuery;
 import com.sprintforge.identity.role.application.port.in.query.GetRoleByIdQuery;
 import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.CreateRoleRequestDTO;
 import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.RoleResponseDTO;
+import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.UpdateRoleRequestDTO;
 import lombok.experimental.UtilityClass;
 
 import java.util.UUID;
@@ -22,8 +23,7 @@ public class RoleRestMapper {
     public CreateRoleCommand toCreateCommand(CreateRoleRequestDTO dto) {
         return new CreateRoleCommand(
                 dto.name(),
-                dto.description(),
-                dto.isDefault()
+                dto.description()
         );
     }
 
@@ -42,15 +42,12 @@ public class RoleRestMapper {
 
     public UpdateRoleDetailCommand toUpdateCommand(
             UUID id,
-            String name,
-            String description,
-            Boolean isDefault
+            UpdateRoleRequestDTO dto
     ) {
         return new UpdateRoleDetailCommand(
                 id,
-                name,
-                description,
-                isDefault
+                dto.name(),
+                dto.description()
         );
     }
 

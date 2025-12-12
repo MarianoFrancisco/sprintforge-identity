@@ -31,7 +31,7 @@ public class UpdateRoleDetailImpl implements UpdateRoleDetail {
             throw new DuplicateRoleException(command.name());
         }
 
-        role.updateDetails(command.name(), command.description(), command.isDefault());
+        role.updateDetails(command.name(), command.description());
         Role roleSaved = saveRole.save(role);
         return roleSaved;
     }

@@ -15,4 +15,3 @@ CREATE TABLE auth_session
         FOREIGN KEY (user_id) REFERENCES "user" (id)
             ON DELETE CASCADE
 );
-

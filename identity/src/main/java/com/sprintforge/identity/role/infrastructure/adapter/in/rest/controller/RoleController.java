@@ -89,9 +89,7 @@ public class RoleController {
         Role updated = updateRoleDetail.handle(
                 RoleRestMapper.toUpdateCommand(
                         id,
-                        dto.name(),
-                        dto.description(),
-                        dto.isDefault()
+                        dto
                 ));
         return RoleRestMapper.toResponse(updated);
     }

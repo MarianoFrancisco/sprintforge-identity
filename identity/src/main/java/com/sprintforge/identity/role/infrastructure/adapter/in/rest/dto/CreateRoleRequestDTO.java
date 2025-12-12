@@ -11,9 +11,6 @@ public record CreateRoleRequestDTO(
         String name,
 
         @Size(max = 250, message = "La descripción del rol no puede exceder los 250 caracteres.")
-        String description,
-
-        @NotNull(message = "Es obligatorio especificar si el rol es por defecto.")
-        Boolean isDefault
+        String description
 ) {
 }
