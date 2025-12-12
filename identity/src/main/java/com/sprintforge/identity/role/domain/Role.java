@@ -1,11 +1,14 @@
 package com.sprintforge.identity.role.domain;
 
+import com.sprintforge.identity.permission.domain.valueobject.PermissionId;
 import com.sprintforge.identity.role.domain.valueobject.RoleDescription;
 import com.sprintforge.identity.role.domain.valueobject.RoleId;
 import com.sprintforge.identity.role.domain.valueobject.RoleName;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import static java.time.Instant.now;
@@ -24,6 +27,8 @@ public class Role {
 
     private final Instant createdAt;
     private Instant updatedAt;
+
+    private final Set<UUID> permissionIds = new HashSet<>();
 
     public Role(
             String name,
@@ -48,16 +53,20 @@ public class Role {
             boolean isActive,
             boolean isDeleted,
             Instant createdAt,
-            Instant updatedAt
+            Instant updatedAt,
+            Set<UUID> permissionIds
     ) {
         this.id = new RoleId(id);
         this.name = new RoleName(name);
         this.description = new RoleDescription(description);
-        this.isDefault = isDefault;
+        this.isDefault = isDefault != null ? isDefault : false;
         this.isActive = isActive;
         this.isDeleted = isDeleted;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        if (permissionIds != null) {
+            this.permissionIds.addAll(permissionIds);
+        }
     }
 
     public void updateDetails(
@@ -99,4 +108,20 @@ public class Role {
         this.updatedAt = now();
     }
 
+    public void setPermissions(Set<UUID> newPermissionIds) {
+        if (this.isDeleted) {
+            throw new IllegalStateException("No se puede modificar un rol eliminado");
+        }
+        if (newPermissionIds == null || newPermissionIds.isEmpty()) {
+            throw new IllegalArgumentException("Un rol debe tener al menos un permiso");
+        }
+
+        this.permissionIds.clear();
+        this.permissionIds.addAll(newPermissionIds);
+        this.updatedAt = now();
+    }
+
+    public Set<UUID> getPermissionIds() {
+        return Set.copyOf(permissionIds);
+    }
 }

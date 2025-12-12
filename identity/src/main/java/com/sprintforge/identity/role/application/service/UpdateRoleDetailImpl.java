@@ -4,6 +4,7 @@ import com.sprintforge.identity.role.application.exception.DuplicateRoleExceptio
 import com.sprintforge.identity.role.application.exception.RoleNotFoundException;
 import com.sprintforge.identity.role.application.port.in.command.UpdateRoleDetail;
 import com.sprintforge.identity.role.application.port.in.command.UpdateRoleDetailCommand;
+import com.sprintforge.identity.role.application.port.out.permission.ValidatePermissionsExist;
 import com.sprintforge.identity.role.application.port.out.persistence.ExistsRoleByNameAndIdNot;
 import com.sprintforge.identity.role.application.port.out.persistence.FindRoleById;
 import com.sprintforge.identity.role.application.port.out.persistence.SaveRole;
@@ -19,6 +20,7 @@ public class UpdateRoleDetailImpl implements UpdateRoleDetail {
 
     private final FindRoleById findRoleById;
     private final ExistsRoleByNameAndIdNot existsRoleByNameAndIdNot;
+    private final ValidatePermissionsExist validatePermissionsExist;
     private final SaveRole saveRole;
 
     @Override
@@ -31,7 +33,11 @@ public class UpdateRoleDetailImpl implements UpdateRoleDetail {
             throw new DuplicateRoleException(command.name());
         }
 
+
+        validatePermissionsExist.validateAllExist(command.permissionIds());
+
         role.updateDetails(command.name(), command.description());
+        role.setPermissions(command.permissionIds());
         Role roleSaved = saveRole.save(role);
         return roleSaved;
     }
