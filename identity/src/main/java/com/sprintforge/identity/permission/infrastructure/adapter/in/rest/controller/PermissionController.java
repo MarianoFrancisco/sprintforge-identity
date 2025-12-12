@@ -7,10 +7,7 @@ import com.sprintforge.identity.permission.domain.Permission;
 import com.sprintforge.identity.permission.infrastructure.adapter.in.rest.dto.PermissionResponseDTO;
 import com.sprintforge.identity.permission.infrastructure.adapter.in.rest.mapper.PermissionRestMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,11 +23,13 @@ public class PermissionController {
 
     @GetMapping
     public List<PermissionResponseDTO> getAll(
-            @RequestParam(required = false) String searchTerm
+            @RequestParam(required = false) String searchTerm,
+            @RequestParam(required = false) List<UUID> ids
     ) {
         List<Permission> permissions = getAllPermissions.handle(
                 PermissionRestMapper.toQuery(
-                        searchTerm
+                        searchTerm,
+                        ids
                 )
         );
         return permissions.stream()
@@ -40,7 +39,7 @@ public class PermissionController {
 
     @GetMapping("/{id}")
     public PermissionResponseDTO getById(
-            @RequestParam UUID id
+            @PathVariable UUID id
     ) {
         Permission permission = getPermissionById.handle(
                 PermissionRestMapper.toQueryById(
@@ -52,7 +51,7 @@ public class PermissionController {
 
     @GetMapping("/code/{code}")
     public PermissionResponseDTO getByCode(
-            @RequestParam String code
+            @PathVariable String code
     ) {
         Permission permission = getPermissionByCode.handle(
                 PermissionRestMapper.toQueryByCode(

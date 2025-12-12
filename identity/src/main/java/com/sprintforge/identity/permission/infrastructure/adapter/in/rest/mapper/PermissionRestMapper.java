@@ -7,6 +7,7 @@ import com.sprintforge.identity.permission.domain.Permission;
 import com.sprintforge.identity.permission.infrastructure.adapter.in.rest.dto.PermissionResponseDTO;
 import lombok.experimental.UtilityClass;
 
+import java.util.List;
 import java.util.UUID;
 
 @UtilityClass
@@ -23,10 +24,12 @@ public class PermissionRestMapper {
     }
 
     public GetAllPermissionsQuery toQuery(
-            String searchTerm
+            String searchTerm,
+            List<UUID> ids
     ) {
         return new GetAllPermissionsQuery(
-                searchTerm
+                searchTerm,
+                ids
         );
     }
 

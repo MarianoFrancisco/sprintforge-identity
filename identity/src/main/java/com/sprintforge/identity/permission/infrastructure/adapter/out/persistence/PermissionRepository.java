@@ -34,7 +34,8 @@ public class PermissionRepository implements
     @Override
     public List<Permission> findAll(GetAllPermissionsQuery query) {
         Specification<PermissionEntity> spec = PermissionSpecs.withFilters(
-                query.searchTerm()
+                query.searchTerm(),
+                query.ids()
         );
         return permissionJpaRepository.findAll(spec)
                 .stream()
