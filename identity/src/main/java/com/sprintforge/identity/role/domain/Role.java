@@ -1,5 +1,6 @@
 package com.sprintforge.identity.role.domain;
 
+import com.sprintforge.common.domain.exception.ValidationException;
 import com.sprintforge.identity.permission.domain.valueobject.PermissionId;
 import com.sprintforge.identity.role.domain.valueobject.RoleDescription;
 import com.sprintforge.identity.role.domain.valueobject.RoleId;
@@ -80,10 +81,10 @@ public class Role {
 
     public void activate() {
         if (this.isDeleted) {
-            throw new IllegalStateException("No se puede activar un rol eliminado");
+            throw new ValidationException("No se puede activar un rol eliminado");
         }
         if (this.isActive) {
-            throw new IllegalStateException("El rol ya está activo");
+            throw new ValidationException("El rol ya está activo");
         }
         this.isActive = true;
         this.updatedAt = now();
@@ -91,10 +92,10 @@ public class Role {
 
     public void deactivate() {
         if (this.isDeleted) {
-            throw new IllegalStateException("No se puede desactivar un rol eliminado");
+            throw new ValidationException("No se puede desactivar un rol eliminado");
         }
         if (!this.isActive) {
-            throw new IllegalStateException("El rol ya está inactivo");
+            throw new ValidationException("El rol ya está inactivo");
         }
         this.isActive = false;
         this.updatedAt = now();
@@ -102,7 +103,7 @@ public class Role {
 
     public void delete() {
         if (this.isDeleted) {
-            throw new IllegalStateException("El rol ya está eliminado");
+            throw new ValidationException("El rol ya está eliminado");
         }
         this.isDeleted = true;
         this.updatedAt = now();
@@ -110,10 +111,10 @@ public class Role {
 
     public void setPermissions(Set<UUID> newPermissionIds) {
         if (this.isDeleted) {
-            throw new IllegalStateException("No se puede modificar un rol eliminado");
+            throw new ValidationException("No se puede modificar un rol eliminado");
         }
         if (newPermissionIds == null || newPermissionIds.isEmpty()) {
-            throw new IllegalArgumentException("Un rol debe tener al menos un permiso");
+            throw new ValidationException("Un rol debe tener al menos un permiso");
         }
 
         this.permissionIds.clear();
