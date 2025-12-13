@@ -1,5 +1,7 @@
 package com.sprintforge.identity.user.domain.valueobject;
 
+import com.sprintforge.common.domain.exception.ValidationException;
+
 public enum UserStatus {
     ACTIVE,
     LOCKED,
@@ -8,12 +10,12 @@ public enum UserStatus {
 
     public static UserStatus safeValueOf(String value) {
         if (value == null) {
-            throw new IllegalArgumentException("El estado del usuario no puede estar vacío");
+            throw new ValidationException("El estado del usuario no puede estar vacío");
         }
         try {
             return UserStatus.valueOf(value);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("El estado del usuario es inválido: " + value);
+            throw new ValidationException("El estado del usuario es inválido: " + value);
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.sprintforge.identity.user.domain.valueobject;
 
+import com.sprintforge.common.domain.exception.ValidationException;
+
 import java.util.UUID;
 
 public record UserId(
@@ -7,7 +9,7 @@ public record UserId(
 ) {
     public UserId {
         if (value == null) {
-            throw new IllegalArgumentException("El identificador de usuario no puede estar vacío");
+            throw new ValidationException("El identificador de usuario no puede estar vacío");
         }
     }
 }
