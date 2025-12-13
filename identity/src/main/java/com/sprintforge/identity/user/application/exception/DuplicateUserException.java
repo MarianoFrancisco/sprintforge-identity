@@ -1,6 +1,6 @@
 package com.sprintforge.identity.user.application.exception;
 
-import com.sprintforge.identity.common.application.exception.DuplicateEntityException;
+import com.sprintforge.common.application.exception.DuplicateEntityException;
 
 import java.util.UUID;
 

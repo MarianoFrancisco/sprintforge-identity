@@ -1,6 +1,6 @@
 package com.sprintforge.identity.role.application.exception;
 
-import com.sprintforge.identity.common.application.exception.DuplicateEntityException;
+import com.sprintforge.common.application.exception.DuplicateEntityException;
 
 public class DuplicateRoleException extends DuplicateEntityException {
     public DuplicateRoleException(String message) {

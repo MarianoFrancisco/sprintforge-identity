@@ -1,5 +1,6 @@
 package com.sprintforge.identity.user.domain;
 
+import com.sprintforge.common.domain.exception.ValidationException;
 import com.sprintforge.identity.user.domain.valueobject.*;
 import lombok.Getter;
 
@@ -81,7 +82,7 @@ public class User {
 
     public void markEmailAsVerified() {
         if (this.emailVerifiedAt != null) {
-            throw new IllegalStateException("El correo electrónico ya ha sido verificado");
+            throw new ValidationException("El correo electrónico ya ha sido verificado");
         }
         this.emailVerifiedAt = now();
         this.updatedAt = now();
@@ -94,7 +95,7 @@ public class User {
 
     public void enableMfa(String mfaSecret) {
         if (this.mfaEnabled) {
-            throw new IllegalStateException("Ya se encuentra habilitada la autenticación multifactor");
+            throw new ValidationException("Ya se encuentra habilitada la autenticación multifactor");
         }
         this.mfaEnabled = true;
         this.mfaSecret = mfaSecret;
@@ -103,7 +104,7 @@ public class User {
 
     public void disableMfa() {
         if (!this.mfaEnabled) {
-            throw new IllegalStateException("La autenticación multifactor ya se encuentra deshabilitada");
+            throw new ValidationException("La autenticación multifactor ya se encuentra deshabilitada");
         }
         this.mfaEnabled = false;
         this.mfaSecret = null;
@@ -112,10 +113,10 @@ public class User {
 
     public void deactivate() {
         if (this.isDeleted) {
-            throw new IllegalStateException("No se puede desactivar un usuario eliminado");
+            throw new ValidationException("No se puede desactivar un usuario eliminado");
         }
         if (!this.status.equals(UserStatus.ACTIVE)) {
-            throw new IllegalStateException("El usuario ya está inactivo");
+            throw new ValidationException("El usuario ya está inactivo");
         }
         this.status = UserStatus.DISABLED;
         this.updatedAt = now();
@@ -123,10 +124,10 @@ public class User {
 
     public void activate() {
         if (this.isDeleted) {
-            throw new IllegalStateException("No se puede activar un usuario eliminado");
+            throw new ValidationException("No se puede activar un usuario eliminado");
         }
         if (this.status.equals(UserStatus.ACTIVE)) {
-            throw new IllegalStateException("El usuario ya está activo");
+            throw new ValidationException("El usuario ya está activo");
         }
         this.status = UserStatus.ACTIVE;
         this.updatedAt = now();
@@ -134,7 +135,7 @@ public class User {
 
     public void delete() {
         if (this.isDeleted) {
-            throw new IllegalStateException("El usuario ya está eliminado");
+            throw new ValidationException("El usuario ya está eliminado");
         }
         this.isDeleted = true;
         this.status = UserStatus.DISABLED;

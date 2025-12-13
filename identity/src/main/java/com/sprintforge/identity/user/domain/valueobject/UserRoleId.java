@@ -1,5 +1,7 @@
 package com.sprintforge.identity.user.domain.valueobject;
 
+import com.sprintforge.common.domain.exception.ValidationException;
+
 import java.util.UUID;
 
 public record UserRoleId(
@@ -7,7 +9,7 @@ public record UserRoleId(
 ) {
     public UserRoleId {
         if (value == null) {
-            throw new IllegalArgumentException("El rol de usuario no puede estar vacío");
+            throw new ValidationException("El rol de usuario no puede estar vacío");
         }
     }
 }
