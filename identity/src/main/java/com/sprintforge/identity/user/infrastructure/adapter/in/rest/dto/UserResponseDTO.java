@@ -14,7 +14,6 @@ public record UserResponseDTO(
         UUID roleId,
         UserStatus status,
         Instant lastLoginAt,
-        boolean isDeleted,
         Instant emailVerifiedAt,
         boolean mfaEnabled,
         String mfaSecret,

@@ -37,7 +37,6 @@ public class UserRestMapper {
                 user.getRoleId().value(),
                 user.getStatus(),
                 user.getLastLoginAt(),
-                user.isDeleted(),
                 user.getEmailVerifiedAt(),
                 user.isMfaEnabled(),
                 user.getMfaSecret(),

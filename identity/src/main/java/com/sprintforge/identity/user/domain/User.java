@@ -20,7 +20,6 @@ public class User {
     private UserRoleId roleId;
     private UserStatus status;
     private Instant lastLoginAt;
-    private boolean isDeleted;
     private Instant emailVerifiedAt;
     private boolean mfaEnabled;
     private String mfaSecret;
@@ -40,7 +39,6 @@ public class User {
         this.employeeId = new UserEmployeeId(employeeId);
         this.roleId = new UserRoleId(UUID.fromString("101afef9-d6ed-40f8-8ac6-4aa5b7e30cd2"));
         this.status = UserStatus.PENDING_ACTIVATION;
-        this.isDeleted = false;
         this.emailVerifiedAt = null;
         this.mfaEnabled = false;
         this.mfaSecret = null;
@@ -57,7 +55,6 @@ public class User {
             UUID roleId,
             UserStatus status,
             Instant lastLoginAt,
-            boolean isDeleted,
             Instant emailVerifiedAt,
             boolean mfaEnabled,
             String mfaSecret,
@@ -72,7 +69,6 @@ public class User {
         this.roleId = new UserRoleId(roleId);
         this.status = status;
         this.lastLoginAt = lastLoginAt;
-        this.isDeleted = isDeleted;
         this.emailVerifiedAt = emailVerifiedAt;
         this.mfaEnabled = mfaEnabled;
         this.mfaSecret = mfaSecret;
@@ -112,8 +108,8 @@ public class User {
     }
 
     public void deactivate() {
-        if (this.isDeleted) {
-            throw new ValidationException("No se puede desactivar un usuario eliminado");
+        if (this.status.equals(UserStatus.DISABLED)) {
+            throw new ValidationException("No se puede desactivar un usuario deshabilitado");
         }
         if (!this.status.equals(UserStatus.ACTIVE)) {
             throw new ValidationException("El usuario ya está inactivo");
@@ -123,8 +119,8 @@ public class User {
     }
 
     public void activate() {
-        if (this.isDeleted) {
-            throw new ValidationException("No se puede activar un usuario eliminado");
+        if (this.status.equals(UserStatus.DISABLED)) {
+            throw new ValidationException("No se puede activar un usuario deshabilitado");
         }
         if (this.status.equals(UserStatus.ACTIVE)) {
             throw new ValidationException("El usuario ya está activo");
@@ -133,11 +129,10 @@ public class User {
         this.updatedAt = now();
     }
 
-    public void delete() {
-        if (this.isDeleted) {
-            throw new ValidationException("El usuario ya está eliminado");
+    public void disable() {
+        if (this.status.equals(UserStatus.DISABLED)) {
+            throw new ValidationException("El usuario ya está deshabilitado");
         }
-        this.isDeleted = true;
         this.status = UserStatus.DISABLED;
         this.updatedAt = now();
     }

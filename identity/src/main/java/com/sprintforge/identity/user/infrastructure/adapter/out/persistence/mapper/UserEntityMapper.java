@@ -21,7 +21,6 @@ public class UserEntityMapper {
                 entity.getRoleId(),
                 entity.getStatus(),
                 entity.getLastLoginAt(),
-                entity.isDeleted(),
                 entity.getEmailVerifiedAt(),
                 entity.isMfaEnabled(),
                 entity.getMfaSecret(),
@@ -48,7 +47,6 @@ public class UserEntityMapper {
                 .roleId(domain.getRoleId().value())
                 .status(domain.getStatus())
                 .lastLoginAt(domain.getLastLoginAt())
-                .isDeleted(domain.isDeleted())
                 .emailVerifiedAt(domain.getEmailVerifiedAt())
                 .mfaEnabled(domain.isMfaEnabled())
                 .mfaSecret(domain.getMfaSecret())

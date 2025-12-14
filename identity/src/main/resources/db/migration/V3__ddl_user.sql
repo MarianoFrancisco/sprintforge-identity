@@ -11,11 +11,10 @@ CREATE TABLE "user"
     role_id           UUID         NOT NULL,
 
     status            VARCHAR(20)  NOT NULL CHECK (
-        status IN ('ACTIVE', 'DISABLED', 'PENDING_ACTIVATION')
+        status IN ('ACTIVE', 'DISABLED', 'PENDING_ACTIVATION', 'LOCKED')
         ),
 
     last_login_at     TIMESTAMP,
-    is_deleted        BOOLEAN      NOT NULL DEFAULT FALSE,
 
     email_verified_at TIMESTAMP,
 

@@ -53,9 +53,6 @@ public class UserEntity {
     @Column(name = "last_login_at")
     private Instant lastLoginAt;
 
-    @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted;
-
     @Column(name = "email_verified_at")
     private Instant emailVerifiedAt;
 
