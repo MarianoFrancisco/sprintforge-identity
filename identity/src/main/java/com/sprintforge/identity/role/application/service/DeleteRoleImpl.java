@@ -21,7 +21,7 @@ public class DeleteRoleImpl implements DeleteRole {
     @Override
     public void handle(DeleteRoleCommand command) {
         Role role = findRoleById.findById(command.id()).orElseThrow(
-                () -> new RoleNotFoundException(command.id().toString())
+                () -> RoleNotFoundException.byId(command.id())
         );
         role.delete();
         saveRole.save(role);

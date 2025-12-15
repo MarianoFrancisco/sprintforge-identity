@@ -1,5 +1,8 @@
 package com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto;
 
+import com.sprintforge.identity.permission.infrastructure.adapter.in.rest.dto.PermissionResponseDTO;
+import com.sprintforge.identity.permission.infrastructure.adapter.out.persistence.entity.PermissionEntity;
+
 import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
@@ -13,6 +16,6 @@ public record RoleResponseDTO(
         boolean isDeleted,
         Instant createdAt,
         Instant updatedAt,
-        Set<UUID> permissionIds
+        Set<PermissionResponseDTO> permissions
 ) {
 }

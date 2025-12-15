@@ -1,5 +1,7 @@
 package com.sprintforge.identity.role.infrastructure.adapter.in.rest.mapper;
 
+import com.sprintforge.identity.permission.infrastructure.adapter.in.rest.dto.PermissionResponseDTO;
+import com.sprintforge.identity.permission.infrastructure.adapter.in.rest.mapper.PermissionRestMapper;
 import com.sprintforge.identity.role.application.port.in.command.*;
 import com.sprintforge.identity.role.application.port.in.query.GetAllRolesQuery;
 import com.sprintforge.identity.role.application.port.in.query.GetRoleByIdQuery;
@@ -9,6 +11,7 @@ import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.RoleResp
 import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.UpdateRoleRequestDTO;
 import lombok.experimental.UtilityClass;
 
+import java.util.Set;
 import java.util.UUID;
 
 @UtilityClass
@@ -30,6 +33,9 @@ public class RoleRestMapper {
     }
 
     public RoleResponseDTO toResponse(Role role) {
+        Set<PermissionResponseDTO> permissions = role.getPermission().stream()
+                .map(PermissionRestMapper::toResponse)
+                .collect(java.util.stream.Collectors.toSet());
         return new RoleResponseDTO(
                 role.getId().value(),
                 role.getName().value(),
@@ -39,7 +45,7 @@ public class RoleRestMapper {
                 role.isDeleted(),
                 role.getCreatedAt(),
                 role.getUpdatedAt(),
-                role.getPermissionIds()
+                permissions
         );
     }
 

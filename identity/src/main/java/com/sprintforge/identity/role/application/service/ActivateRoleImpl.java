@@ -21,7 +21,7 @@ public class ActivateRoleImpl implements ActivateRole {
     @Override
     public Role handle(ActivateRoleCommand command) {
         Role role = findRoleById.findById(command.id()).orElseThrow(
-                () -> new RoleNotFoundException(command.id().toString())
+                () -> RoleNotFoundException.byId(command.id())
         );
         role.activate();
         Role roleSaved = saveRole.save(role);

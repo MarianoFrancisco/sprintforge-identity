@@ -1,11 +1,7 @@
 package com.sprintforge.identity.role.infrastructure.adapter.out.persistence;
 
 import com.sprintforge.identity.role.application.port.in.query.GetAllRolesQuery;
-import com.sprintforge.identity.role.application.port.out.persistence.ExistRoleByName;
-import com.sprintforge.identity.role.application.port.out.persistence.ExistsRoleByNameAndIdNot;
-import com.sprintforge.identity.role.application.port.out.persistence.FindAllRoles;
-import com.sprintforge.identity.role.application.port.out.persistence.FindRoleById;
-import com.sprintforge.identity.role.application.port.out.persistence.SaveRole;
+import com.sprintforge.identity.role.application.port.out.persistence.*;
 import com.sprintforge.identity.role.domain.Role;
 import com.sprintforge.identity.role.infrastructure.adapter.out.persistence.entity.RoleEntity;
 import com.sprintforge.identity.role.infrastructure.adapter.out.persistence.mapper.RoleEntityMapper;
@@ -26,6 +22,7 @@ public class RoleRepository implements
         ExistsRoleByNameAndIdNot,
         FindAllRoles,
         FindRoleById,
+        FindRoleByIsDefaultTrue,
         SaveRole {
 
     private final RoleJpaRepository roleJpaRepository;
@@ -62,9 +59,17 @@ public class RoleRepository implements
     }
 
     @Override
+    public Optional<Role> findDefaultRole() {
+        return roleJpaRepository.findByIsDefaultTrue().map(
+                RoleEntityMapper::toDomain
+        );
+    }
+
+    @Override
     public Role save(Role role) {
         RoleEntity entity = RoleEntityMapper.toEntity(role);
         RoleEntity saved = roleJpaRepository.save(entity);
         return RoleEntityMapper.toDomain(saved);
     }
+
 }

@@ -22,7 +22,7 @@ public class DeactivateRoleImpl implements DeactivateRole {
     public Role handle(DeactivateRoleCommand command) {
         Role role = findRoleById.findById(command.id())
                 .orElseThrow(() ->
-                        new RoleNotFoundException(command.id().toString())
+                        RoleNotFoundException.byId(command.id())
                 );
         role.deactivate();
         Role roleSaved = saveRole.save(role);
