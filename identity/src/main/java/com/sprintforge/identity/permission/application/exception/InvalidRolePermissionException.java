@@ -1,4 +1,4 @@
-package com.sprintforge.identity.role.application.exception;
+package com.sprintforge.identity.permission.application.exception;
 
 import java.util.Set;
 import java.util.UUID;

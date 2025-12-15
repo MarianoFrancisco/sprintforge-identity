@@ -15,4 +15,14 @@ public class PermissionEntityMapper {
                 entity.getCategory()
         );
     }
+
+    public PermissionEntity toEntity(Permission domain) {
+        return PermissionEntity.builder()
+                .id(domain.getId().value())
+                .code(domain.getCode().value())
+                .name(domain.getName().value())
+                .description(domain.getDescription().value())
+                .category(domain.getCategory().value())
+                .build();
+    }
 }
