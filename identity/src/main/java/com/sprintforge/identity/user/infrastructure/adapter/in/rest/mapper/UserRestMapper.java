@@ -1,5 +1,6 @@
 package com.sprintforge.identity.user.infrastructure.adapter.in.rest.mapper;
 
+import com.sprintforge.identity.role.infrastructure.adapter.in.rest.mapper.RoleRestMapper;
 import com.sprintforge.identity.user.application.port.in.query.GetAllUsersQuery;
 import com.sprintforge.identity.user.application.port.in.query.GetUserByIdQuery;
 import com.sprintforge.identity.user.domain.User;
@@ -34,7 +35,7 @@ public class UserRestMapper {
                 user.getEmail().value(),
                 password,
                 user.getEmployeeId().value(),
-                user.getRoleId().value(),
+                RoleRestMapper.toResponse(user.getRole()),
                 user.getStatus(),
                 user.getLastLoginAt(),
                 user.getEmailVerifiedAt(),

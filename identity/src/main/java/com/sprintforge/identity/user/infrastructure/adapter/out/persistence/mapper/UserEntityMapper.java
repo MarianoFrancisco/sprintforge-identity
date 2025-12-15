@@ -1,5 +1,6 @@
 package com.sprintforge.identity.user.infrastructure.adapter.out.persistence.mapper;
 
+import com.sprintforge.identity.role.infrastructure.adapter.out.persistence.mapper.RoleEntityMapper;
 import com.sprintforge.identity.user.domain.User;
 import com.sprintforge.identity.user.infrastructure.adapter.out.persistence.entity.UserEntity;
 import lombok.experimental.UtilityClass;
@@ -18,7 +19,7 @@ public class UserEntityMapper {
                 entity.getEmail(),
                 entity.getPassword(),
                 entity.getEmployeeId(),
-                entity.getRoleId(),
+                RoleEntityMapper.toDomain(entity.getRole()),
                 entity.getStatus(),
                 entity.getLastLoginAt(),
                 entity.getEmailVerifiedAt(),
@@ -44,7 +45,7 @@ public class UserEntityMapper {
                 .email(domain.getEmail().value())
                 .password(password)
                 .employeeId(domain.getEmployeeId().value())
-                .roleId(domain.getRoleId().value())
+                .role(RoleEntityMapper.toEntity(domain.getRole()))
                 .status(domain.getStatus())
                 .lastLoginAt(domain.getLastLoginAt())
                 .emailVerifiedAt(domain.getEmailVerifiedAt())

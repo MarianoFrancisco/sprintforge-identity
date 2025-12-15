@@ -1,6 +1,7 @@
 package com.sprintforge.identity.user.domain;
 
 import com.sprintforge.common.domain.exception.ValidationException;
+import com.sprintforge.identity.role.domain.Role;
 import com.sprintforge.identity.user.domain.valueobject.*;
 import lombok.Getter;
 
@@ -8,6 +9,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 import static java.time.Instant.now;
+import static java.util.Objects.requireNonNull;
 import static java.util.UUID.randomUUID;
 
 @Getter
@@ -17,7 +19,6 @@ public class User {
     private UserEmail email;
     private UserPassword password;
     private UserEmployeeId employeeId;
-    private UserRoleId roleId;
     private UserStatus status;
     private Instant lastLoginAt;
     private Instant emailVerifiedAt;
@@ -25,11 +26,13 @@ public class User {
     private String mfaSecret;
     private final Instant createdAt;
     private Instant updatedAt;
+    private Role role;
 
     public User(
             String username,
             String email,
-            UUID employeeId
+            UUID employeeId,
+            Role role
     ) {
         Instant now = now();
 
@@ -37,7 +40,7 @@ public class User {
         this.username = new Username(username);
         this.email = new UserEmail(email);
         this.employeeId = new UserEmployeeId(employeeId);
-        this.roleId = new UserRoleId(UUID.fromString("101afef9-d6ed-40f8-8ac6-4aa5b7e30cd2"));
+        this.role = requireNonNull(role, "El rol no puede estar vacío");
         this.status = UserStatus.PENDING_ACTIVATION;
         this.emailVerifiedAt = null;
         this.mfaEnabled = false;
@@ -52,7 +55,7 @@ public class User {
             String email,
             String passwordHash,
             UUID employeeId,
-            UUID roleId,
+            Role role,
             UserStatus status,
             Instant lastLoginAt,
             Instant emailVerifiedAt,
@@ -66,7 +69,7 @@ public class User {
         this.email = new UserEmail(email);
         this.password = new UserPassword(passwordHash);
         this.employeeId = new UserEmployeeId(employeeId);
-        this.roleId = new UserRoleId(roleId);
+        this.role = requireNonNull(role, "El rol no puede estar vacío");
         this.status = status;
         this.lastLoginAt = lastLoginAt;
         this.emailVerifiedAt = emailVerifiedAt;

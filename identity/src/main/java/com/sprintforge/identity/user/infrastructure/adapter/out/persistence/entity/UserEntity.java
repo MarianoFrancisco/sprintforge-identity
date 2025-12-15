@@ -1,12 +1,8 @@
 package com.sprintforge.identity.user.infrastructure.adapter.out.persistence.entity;
 
+import com.sprintforge.identity.role.infrastructure.adapter.out.persistence.entity.RoleEntity;
 import com.sprintforge.identity.user.domain.valueobject.UserStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -17,6 +13,8 @@ import org.hibernate.dialect.type.PostgreSQLEnumJdbcType;
 
 import java.time.Instant;
 import java.util.UUID;
+
+import static jakarta.persistence.FetchType.LAZY;
 
 @Getter
 @Setter
@@ -42,8 +40,9 @@ public class UserEntity {
     @Column(name = "employee_id", nullable = false)
     private UUID employeeId;
 
-    @Column(name = "role_id", nullable = false)
-    private UUID roleId;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "role_id", nullable = false)
+    private RoleEntity role;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
