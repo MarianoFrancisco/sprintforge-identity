@@ -23,13 +23,11 @@ public class PermissionController {
 
     @GetMapping
     public List<PermissionResponseDTO> getAll(
-            @RequestParam(required = false) String searchTerm,
-            @RequestParam(required = false) List<UUID> ids
+            @RequestParam(required = false) String searchTerm
     ) {
         List<Permission> permissions = getAllPermissions.handle(
                 PermissionRestMapper.toQuery(
-                        searchTerm,
-                        ids
+                        searchTerm
                 )
         );
         return permissions.stream()

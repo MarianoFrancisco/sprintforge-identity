@@ -1,21 +1,28 @@
 package com.sprintforge.identity.role.infrastructure.adapter.out.persistence.mapper;
 
+import com.sprintforge.identity.permission.domain.Permission;
 import com.sprintforge.identity.permission.infrastructure.adapter.out.persistence.entity.PermissionEntity;
+import com.sprintforge.identity.permission.infrastructure.adapter.out.persistence.mapper.PermissionEntityMapper;
 import com.sprintforge.identity.role.domain.Role;
 import com.sprintforge.identity.role.infrastructure.adapter.out.persistence.entity.RoleEntity;
 import lombok.experimental.UtilityClass;
 
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toSet;
 
 @UtilityClass
 public class RoleEntityMapper {
 
     public Role toDomain(RoleEntity entity) {
-        Set<UUID> permissionIds = entity.getPermissions().stream()
-                .map(PermissionEntity::getId)
-                .collect(Collectors.toSet());
+        if (entity == null) {
+            return null;
+        }
+
+        Set<Permission> permissions = entity.getPermissions().stream()
+                .map(PermissionEntityMapper::toDomain)
+                .collect(toSet());
 
         return new Role(
                 entity.getId(),
@@ -26,34 +33,29 @@ public class RoleEntityMapper {
                 entity.isDeleted(),
                 entity.getCreatedAt(),
                 entity.getUpdatedAt(),
-                permissionIds
+                permissions
         );
     }
 
     public RoleEntity toEntity(Role role) {
-        RoleEntity entity = new RoleEntity();
+        if (role == null) {
+            return null;
+        }
 
-        entity.setId(role.getId().value());
-        entity.setName(role.getName().value());
-        entity.setDescription(role.getDescription().value());
-        entity.setDefault(role.isDefault());
-        entity.setActive(role.isActive());
-        entity.setDeleted(role.isDeleted());
-        entity.setCreatedAt(role.getCreatedAt());
-        entity.setUpdatedAt(role.getUpdatedAt());
+        Set<PermissionEntity> permissions = role.getPermissions().stream()
+                .map(PermissionEntityMapper::toEntity)
+                .collect(toSet());
 
-        Set<PermissionEntity> permissions = role.getPermissionIds().stream()
-                .map(RoleEntityMapper::toPermissionEntityWithId)
-                .collect(Collectors.toSet());
-
-        entity.setPermissions(permissions);
-
-        return entity;
-    }
-
-    private PermissionEntity toPermissionEntityWithId(UUID id) {
-        PermissionEntity entity = new PermissionEntity();
-        entity.setId(id);
-        return entity;
+        return RoleEntity.builder()
+                .id(role.getId().value())
+                .name(role.getName().value())
+                .description(role.getDescription().value())
+                .isDefault(role.isDefault())
+                .isActive(role.isActive())
+                .isDeleted(role.isDeleted())
+                .createdAt(role.getCreatedAt())
+                .updatedAt(role.getUpdatedAt())
+                .permissions(permissions)
+                .build();
     }
 }

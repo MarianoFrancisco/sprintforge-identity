@@ -24,12 +24,10 @@ public class PermissionRestMapper {
     }
 
     public GetAllPermissionsQuery toQuery(
-            String searchTerm,
-            List<UUID> ids
+            String searchTerm
     ) {
         return new GetAllPermissionsQuery(
-                searchTerm,
-                ids
+                searchTerm
         );
     }
 

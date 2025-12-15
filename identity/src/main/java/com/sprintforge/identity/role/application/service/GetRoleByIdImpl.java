@@ -19,7 +19,7 @@ public class GetRoleByIdImpl implements GetRoleById {
     @Override
     public Role handle(GetRoleByIdQuery query) {
         return findRoleById.findById(query.id()).orElseThrow(
-                () -> new RoleNotFoundException(query.id().toString())
+                () -> RoleNotFoundException.byId(query.id())
         );
     }
 }

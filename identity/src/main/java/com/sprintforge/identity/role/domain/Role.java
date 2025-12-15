@@ -1,7 +1,7 @@
 package com.sprintforge.identity.role.domain;
 
 import com.sprintforge.common.domain.exception.ValidationException;
-import com.sprintforge.identity.permission.domain.valueobject.PermissionId;
+import com.sprintforge.identity.permission.domain.Permission;
 import com.sprintforge.identity.role.domain.valueobject.RoleDescription;
 import com.sprintforge.identity.role.domain.valueobject.RoleId;
 import com.sprintforge.identity.role.domain.valueobject.RoleName;
@@ -29,7 +29,7 @@ public class Role {
     private final Instant createdAt;
     private Instant updatedAt;
 
-    private final Set<UUID> permissionIds = new HashSet<>();
+    private final Set<Permission> permissions = new HashSet<>();
 
     public Role(
             String name,
@@ -55,7 +55,7 @@ public class Role {
             boolean isDeleted,
             Instant createdAt,
             Instant updatedAt,
-            Set<UUID> permissionIds
+            Set<Permission> permissions
     ) {
         this.id = new RoleId(id);
         this.name = new RoleName(name);
@@ -65,8 +65,8 @@ public class Role {
         this.isDeleted = isDeleted;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        if (permissionIds != null) {
-            this.permissionIds.addAll(permissionIds);
+        if (permissions != null) {
+            this.permissions.addAll(permissions);
         }
     }
 
@@ -109,20 +109,20 @@ public class Role {
         this.updatedAt = now();
     }
 
-    public void setPermissions(Set<UUID> newPermissionIds) {
+    public void setPermissions(Set<Permission> newPermission) {
         if (this.isDeleted) {
             throw new ValidationException("No se puede modificar un rol eliminado");
         }
-        if (newPermissionIds == null || newPermissionIds.isEmpty()) {
+        if (newPermission == null || newPermission.isEmpty()) {
             throw new ValidationException("Un rol debe tener al menos un permiso");
         }
 
-        this.permissionIds.clear();
-        this.permissionIds.addAll(newPermissionIds);
+        this.permissions.clear();
+        this.permissions.addAll(newPermission);
         this.updatedAt = now();
     }
 
-    public Set<UUID> getPermissionIds() {
-        return Set.copyOf(permissionIds);
+    public Set<Permission> getPermission() {
+        return Set.copyOf(permissions);
     }
 }

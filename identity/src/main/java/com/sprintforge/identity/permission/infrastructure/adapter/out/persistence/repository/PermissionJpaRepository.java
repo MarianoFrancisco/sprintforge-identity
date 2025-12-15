@@ -17,5 +17,5 @@ public interface PermissionJpaRepository extends
 
     Optional<PermissionEntity> findById(UUID id);
 
-    long countByIdIn(Set<UUID> ids);
+    Set<PermissionEntity> findByIdIn(Set<UUID> ids);
 }

@@ -17,4 +17,6 @@ public interface RoleJpaRepository extends
     boolean existsByNameAndIdNot(String name, UUID id);
 
     Optional<RoleEntity> findById(UUID uuid);
+
+    Optional<RoleEntity> findByIsDefaultTrue();
 }

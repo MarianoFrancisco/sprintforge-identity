@@ -1,5 +1,6 @@
 package com.sprintforge.identity.user.infrastructure.adapter.in.rest.dto;
 
+import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.RoleResponseDTO;
 import com.sprintforge.identity.user.domain.valueobject.UserStatus;
 
 import java.time.Instant;
@@ -11,7 +12,7 @@ public record UserResponseDTO(
         String email,
         String passwordHash,
         UUID employeeId,
-        UUID roleId,
+        RoleResponseDTO role,
         UserStatus status,
         Instant lastLoginAt,
         Instant emailVerifiedAt,
