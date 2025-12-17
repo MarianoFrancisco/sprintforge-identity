@@ -31,6 +31,7 @@ public class AuthRestMapper {
             String ipAddress
     ) {
         return new RefreshTokenCommand(
+                dto.authSessionId(),
                 dto.refreshToken(),
                 userAgent,
                 ipAddress

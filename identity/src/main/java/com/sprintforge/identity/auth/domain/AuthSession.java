@@ -11,11 +11,11 @@ public class AuthSession {
 
     private final AuthSessionId id;
     private final AuthSessionUserId userId;
-    private final AuthSessionRefreshToken refreshToken;
+    private AuthSessionRefreshToken refreshToken;
     private final AuthSessionUserAgent userAgent;
     private final AuthSessionIpAddress ipAddress;
     private final Instant createdAt;
-    private final Instant expiresAt;
+    private Instant expiresAt;
     private Instant revokedAt;
     private AuthSessionRevokedReason revokedReason;
 
@@ -62,4 +62,22 @@ public class AuthSession {
         this.revokedAt = revokedAt;
         this.revokedReason = AuthSessionRevokedReason.of(revokedReason);
     }
+
+    public boolean compareRefreshToken(String refreshToken) {
+        return this.refreshToken.value().equals(refreshToken);
+    }
+
+    public boolean validateRefreshTokenExpiration(Instant now) {
+        return this.expiresAt.isBefore(now);
+    }
+
+    public void rotateRefreshToken(
+            String newRefreshToken,
+            Instant newExpiresAt,
+            Instant now
+    ) {
+        this.refreshToken = AuthSessionRefreshToken.of(newRefreshToken);
+        this.expiresAt = newExpiresAt;
+    }
+
 }
