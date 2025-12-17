@@ -1,14 +1,14 @@
 package com.sprintforge.identity.user.application.mapper;
 
-import com.sprintforge.identity.user.application.port.in.result.GetUserAuthDataByEmailResult;
+import com.sprintforge.identity.user.application.port.in.result.UserAuthDataResult;
 import com.sprintforge.identity.user.domain.User;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class GetUserAuthDataByEmailResultMapper {
+public class UserAuthDataResultMapper {
 
-    public GetUserAuthDataByEmailResult from(User u) {
-        return new GetUserAuthDataByEmailResult(
+    public UserAuthDataResult from(User u) {
+        return new UserAuthDataResult(
                 u.getId().value(),
                 u.getEmployeeId().value(),
                 u.getRole().getId().value(),
