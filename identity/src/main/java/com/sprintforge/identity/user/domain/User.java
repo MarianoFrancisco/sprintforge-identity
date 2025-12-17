@@ -9,16 +9,15 @@ import java.time.Instant;
 import java.util.UUID;
 
 import static java.time.Instant.now;
-import static java.util.Objects.requireNonNull;
 import static java.util.UUID.randomUUID;
 
 @Getter
 public class User {
     private final UserId id;
     private final Username username;
-    private UserEmail email;
+    private final UserEmail email;
     private UserPassword password;
-    private UserEmployeeId employeeId;
+    private final UserEmployeeId employeeId;
     private UserStatus status;
     private Instant lastLoginAt;
     private Instant emailVerifiedAt;
@@ -40,9 +39,8 @@ public class User {
         this.username = new Username(username);
         this.email = new UserEmail(email);
         this.employeeId = new UserEmployeeId(employeeId);
-        this.role = requireNonNull(role, "El rol no puede estar vacío");
+        this.role = validateRole(role);
         this.status = UserStatus.PENDING_ACTIVATION;
-        this.emailVerifiedAt = null;
         this.mfaEnabled = false;
         this.mfaSecret = null;
         this.createdAt = now;
@@ -69,7 +67,7 @@ public class User {
         this.email = new UserEmail(email);
         this.password = new UserPassword(passwordHash);
         this.employeeId = new UserEmployeeId(employeeId);
-        this.role = requireNonNull(role, "El rol no puede estar vacío");
+        this.role = validateRole(role);
         this.status = status;
         this.lastLoginAt = lastLoginAt;
         this.emailVerifiedAt = emailVerifiedAt;
@@ -77,6 +75,20 @@ public class User {
         this.mfaSecret = mfaSecret;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public void setPassword(String passwordHash) {
+        if (this.status.equals(UserStatus.PENDING_ACTIVATION)) {
+            throw new ValidationException("No se puede cambiar la contraseña de un usuario pendiente de activación");
+        }
+        this.password = new UserPassword(passwordHash);
+        this.updatedAt = now();
+    }
+
+    public void setInitialPassword(String passwordHash) {
+        this.status = UserStatus.ACTIVE;
+        this.password = new UserPassword(passwordHash);
+        this.updatedAt = now();
     }
 
     public void markEmailAsVerified() {
@@ -89,6 +101,11 @@ public class User {
 
     public void updateLastLogin() {
         this.lastLoginAt = now();
+        this.updatedAt = now();
+    }
+
+    public void changeRole(Role newRole) {
+        this.role = validateRole(newRole);
         this.updatedAt = now();
     }
 
@@ -138,5 +155,13 @@ public class User {
         }
         this.status = UserStatus.DISABLED;
         this.updatedAt = now();
+    }
+
+    private Role validateRole(Role role) {
+        if (role == null) {
+            throw new ValidationException("El rol no puede estar vacío");
+        }
+        role.validateActive();
+        return role;
     }
 }

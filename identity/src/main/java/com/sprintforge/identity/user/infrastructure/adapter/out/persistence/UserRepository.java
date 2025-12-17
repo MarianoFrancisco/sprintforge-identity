@@ -24,6 +24,7 @@ public class UserRepository implements
         ExistUserByUsername,
         FindAllUsers,
         FindUserById,
+        FindUserByEmail,
         SaveUser {
 
     private final UserJpaRepository userJpaRepository;
@@ -56,6 +57,13 @@ public class UserRepository implements
     @Override
     public Optional<User> findById(UUID id) {
         return userJpaRepository.findById(id).map(
+                UserEntityMapper::toDomain
+        );
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userJpaRepository.findByEmail(email).map(
                 UserEntityMapper::toDomain
         );
     }
