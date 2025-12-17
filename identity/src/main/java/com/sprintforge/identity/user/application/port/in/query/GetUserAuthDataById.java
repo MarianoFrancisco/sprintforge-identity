@@ -4,6 +4,6 @@ import com.sprintforge.identity.user.application.port.in.result.UserAuthDataResu
 
 import java.util.Optional;
 
-public interface GetUserAuthDataByEmail {
-    Optional<UserAuthDataResult> handle(GetUserAuthDataByEmailQuery query);
+public interface GetUserAuthDataById {
+    Optional<UserAuthDataResult> handle(GetUserAuthDataByIdQuery query);
 }

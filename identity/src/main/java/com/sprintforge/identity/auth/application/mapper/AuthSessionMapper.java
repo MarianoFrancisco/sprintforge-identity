@@ -2,7 +2,7 @@ package com.sprintforge.identity.auth.application.mapper;
 
 import com.sprintforge.identity.auth.application.port.in.command.LoginCommand;
 import com.sprintforge.identity.auth.domain.AuthSession;
-import com.sprintforge.identity.user.application.port.in.result.GetUserAuthDataByEmailResult;
+import com.sprintforge.identity.user.application.port.in.result.UserAuthDataResult;
 import lombok.experimental.UtilityClass;
 
 import java.time.Instant;
@@ -10,7 +10,7 @@ import java.time.Instant;
 @UtilityClass
 public class AuthSessionMapper {
     public AuthSession toDomain(
-            GetUserAuthDataByEmailResult result,
+            UserAuthDataResult result,
             String refreshToken,
             LoginCommand command,
             Instant createdAt,

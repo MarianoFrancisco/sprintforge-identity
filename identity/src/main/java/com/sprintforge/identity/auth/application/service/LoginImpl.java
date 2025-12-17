@@ -14,7 +14,7 @@ import com.sprintforge.identity.auth.application.port.out.security.RefreshTokenG
 import com.sprintforge.identity.auth.domain.AuthSession;
 import com.sprintforge.identity.user.application.port.in.query.GetUserAuthDataByEmail;
 import com.sprintforge.identity.user.application.port.in.query.GetUserAuthDataByEmailQuery;
-import com.sprintforge.identity.user.application.port.in.result.GetUserAuthDataByEmailResult;
+import com.sprintforge.identity.user.application.port.in.result.UserAuthDataResult;
 import com.sprintforge.identity.user.domain.valueobject.UserStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class LoginImpl implements Login {
 
     @Override
     public TokenPairResult handle(LoginCommand command) {
-        GetUserAuthDataByEmailResult userAuthData = getAndValidateUser(command);
+        UserAuthDataResult userAuthData = getAndValidateUser(command);
 
 
         String refreshToken = refreshTokenGenerator.generate();
@@ -73,8 +73,8 @@ public class LoginImpl implements Login {
         );
     }
 
-    private GetUserAuthDataByEmailResult getAndValidateUser(LoginCommand command) {
-        GetUserAuthDataByEmailResult userAuthData = getUserByEmail.handle(
+    private UserAuthDataResult getAndValidateUser(LoginCommand command) {
+        UserAuthDataResult userAuthData = getUserByEmail.handle(
                 new GetUserAuthDataByEmailQuery(command.email())
         ).orElseThrow(
                 InvalidCredentialsException::new

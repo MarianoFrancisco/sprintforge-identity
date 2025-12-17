@@ -2,7 +2,7 @@ package com.sprintforge.identity.user.application.port.in.result;
 
 import java.util.UUID;
 
-public record GetUserAuthDataByEmailResult(
+public record UserAuthDataResult(
         UUID userId,
         UUID roleId,
         UUID employeeId,
