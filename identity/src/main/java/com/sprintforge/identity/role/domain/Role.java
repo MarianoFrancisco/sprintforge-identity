@@ -125,4 +125,14 @@ public class Role {
     public Set<Permission> getPermission() {
         return Set.copyOf(permissions);
     }
+
+    public Role validateActive() {
+        if (!this.isActive) {
+            throw new ValidationException("El rol no está activo");
+        }
+        if (this.isDeleted) {
+            throw new ValidationException("El rol está eliminado");
+        }
+        return this;
+    }
 }

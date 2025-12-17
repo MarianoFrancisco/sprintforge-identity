@@ -27,7 +27,7 @@ public class RoleEntityMapper {
         return new Role(
                 entity.getId(),
                 entity.getName(),
-                entity.getDescription(),
+                entity.getDescription() != null ? entity.getDescription() : null,
                 entity.isDefault(),
                 entity.isActive(),
                 entity.isDeleted(),
@@ -46,10 +46,14 @@ public class RoleEntityMapper {
                 .map(PermissionEntityMapper::toEntity)
                 .collect(toSet());
 
+        String description = role.getDescription() != null
+                ? role.getDescription().value()
+                : null;
+
         return RoleEntity.builder()
                 .id(role.getId().value())
                 .name(role.getName().value())
-                .description(role.getDescription().value())
+                .description(description)
                 .isDefault(role.isDefault())
                 .isActive(role.isActive())
                 .isDeleted(role.isDeleted())
