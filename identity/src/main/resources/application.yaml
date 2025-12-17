@@ -71,6 +71,18 @@ spring:
     groups:
       default-group: ${spring.kafka.consumer.group-id}
 
+security:
+  jwt:
+    secret: ${JWT_SECRET:secretkey}
+    issuer: ${JWT_ISSUER:sprintforge-identity}
+    access-ttl-minutes: ${JWT_ACCESS_TTL_MINUTES:15}
+
+  refresh:
+    ttl-days: ${REFRESH_TTL_DAYS:30}
+
+  password:
+    bcrypt-strength: ${BCRYPT_STRENGTH:10}
+
 logging:
   level:
     root: ${LOG_LEVEL_ROOT:INFO}
