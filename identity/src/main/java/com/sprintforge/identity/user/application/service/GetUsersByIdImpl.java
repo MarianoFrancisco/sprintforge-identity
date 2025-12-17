@@ -1,5 +1,6 @@
 package com.sprintforge.identity.user.application.service;
 
+import com.sprintforge.identity.user.application.exception.UserNotActiveException;
 import com.sprintforge.identity.user.application.exception.UserNotFoundException;
 import com.sprintforge.identity.user.application.port.in.query.GetUserById;
 import com.sprintforge.identity.user.application.port.in.query.GetUserByIdQuery;
@@ -18,8 +19,13 @@ public class GetUsersByIdImpl implements GetUserById {
 
     @Override
     public User handle(GetUserByIdQuery query) {
-        return findUserById.findById(query.id()).orElseThrow(
+        User user = findUserById.findById(query.id()).orElseThrow(
                 () -> UserNotFoundException.byId(query.id())
         );
+
+        if (user.getStatus().equals("DISABLED")) {
+            throw UserNotActiveException.byId(query.id());
+        }
+        return user;
     }
 }
