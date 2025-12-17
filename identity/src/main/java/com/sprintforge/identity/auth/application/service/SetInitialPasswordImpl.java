@@ -3,8 +3,8 @@ package com.sprintforge.identity.auth.application.service;
 import com.sprintforge.identity.auth.application.port.in.command.SetInitialPassword;
 import com.sprintforge.identity.auth.application.port.in.command.SetInitialPasswordCommand;
 import com.sprintforge.identity.auth.application.port.out.security.PasswordHashGenerator;
-import com.sprintforge.identity.user.application.port.in.command.UpdateUserPassword;
-import com.sprintforge.identity.user.application.port.in.command.UpdateUserPasswordCommand;
+import com.sprintforge.identity.user.application.port.in.command.SetInitialUserPassword;
+import com.sprintforge.identity.user.application.port.in.command.SetInitialUserPasswordCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,15 +15,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class SetInitialPasswordImpl implements SetInitialPassword {
 
     private final PasswordHashGenerator passwordHashGenerator;
-    private final UpdateUserPassword updateUserPassword;
+    private final SetInitialUserPassword setInitialUserPassword;
 
     @Override
     public void handle(SetInitialPasswordCommand command) {
-        String newPassword = passwordHashGenerator.generate(command.initialPassword());
-        updateUserPassword.handle(
-                new UpdateUserPasswordCommand(
+        String initialPassword = passwordHashGenerator.generate(command.initialPassword());
+        setInitialUserPassword.handle(
+                new SetInitialUserPasswordCommand(
                         command.userId(),
-                        newPassword
+                        initialPassword
                 )
         );
     }

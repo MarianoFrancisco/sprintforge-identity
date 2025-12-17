@@ -81,7 +81,7 @@ public class LoginImpl implements Login {
         );
         if (
                 !passwordVerifier.matches(command.password(), userAuthData.password())
-                        || !userAuthData.status().equals(UserStatus.ACTIVE)
+                        || !UserStatus.ACTIVE.name().equals(userAuthData.status())
         ) {
             throw new InvalidCredentialsException();
         }
