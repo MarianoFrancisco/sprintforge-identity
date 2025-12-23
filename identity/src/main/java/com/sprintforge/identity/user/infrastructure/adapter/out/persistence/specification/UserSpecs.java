@@ -1,11 +1,14 @@
 package com.sprintforge.identity.user.infrastructure.adapter.out.persistence.specification;
 
+import com.sprintforge.identity.user.domain.valueobject.UserStatus;
 import com.sprintforge.identity.user.infrastructure.adapter.out.persistence.entity.UserEntity;
 import lombok.experimental.UtilityClass;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.springframework.data.jpa.domain.Specification;
 
+import static java.util.Locale.ROOT;
+import static javax.xml.transform.OutputKeys.METHOD;
 import static org.apache.commons.lang.StringUtils.isNotBlank;
 
 @NullMarked
@@ -22,12 +25,24 @@ public class UserSpecs {
                 );
     }
 
-    public Specification<UserEntity> withStatus(String status) {
+    public Specification<UserEntity> withStatus(UserStatus status) {
         return (root, ignored, cb) ->
-                cb.equal(
-                        cb.upper(root.get("status")),
-                        status.toUpperCase()
-                );
+                cb.equal(root.get(METHOD), status);
+    }
+
+    public Specification<UserEntity> withStatus(String status) {
+        if (!isNotBlank(status)) {
+            return (ignoredRoot, ignoredQuery, cb) -> cb.conjunction();
+        }
+
+        UserStatus parsed;
+        try {
+            parsed = UserStatus.valueOf(status.trim().toUpperCase(ROOT));
+        } catch (IllegalArgumentException ex) {
+            return (ignoredRoot, ignoredQuery, cb) -> cb.conjunction();
+        }
+
+        return withStatus(parsed);
     }
 
     public Specification<UserEntity> isDeleted(Boolean isDeleted) {

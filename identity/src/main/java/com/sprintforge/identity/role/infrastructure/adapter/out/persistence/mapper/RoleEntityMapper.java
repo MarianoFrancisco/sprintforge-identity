@@ -8,7 +8,6 @@ import com.sprintforge.identity.role.infrastructure.adapter.out.persistence.enti
 import lombok.experimental.UtilityClass;
 
 import java.util.Set;
-import java.util.UUID;
 
 import static java.util.stream.Collectors.toSet;
 
