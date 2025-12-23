@@ -4,8 +4,8 @@ import java.util.UUID;
 
 public record UserAuthDataResult(
         UUID userId,
-        UUID roleId,
         UUID employeeId,
+        UUID roleId,
         String email,
         String password,
         String status
