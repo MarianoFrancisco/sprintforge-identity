@@ -3,7 +3,6 @@ package com.sprintforge.identity.auth.application.mapper;
 import com.sprintforge.identity.auth.application.port.in.result.TokenPairResult;
 import lombok.experimental.UtilityClass;
 
-import java.time.Instant;
 import java.util.UUID;
 
 @UtilityClass

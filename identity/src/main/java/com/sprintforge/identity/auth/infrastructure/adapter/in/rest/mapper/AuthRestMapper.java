@@ -8,8 +8,6 @@ import com.sprintforge.identity.auth.application.port.in.result.TokenPairResult;
 import com.sprintforge.identity.auth.infrastructure.adapter.in.rest.dto.*;
 import lombok.experimental.UtilityClass;
 
-import java.util.UUID;
-
 @UtilityClass
 public class AuthRestMapper {
     public LoginCommand toLoginCommand(
