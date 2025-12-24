@@ -24,7 +24,7 @@ public class SetInitialUserPasswordImpl implements SetInitialUserPassword {
         User user = findUserById.findById(command.id()).orElseThrow(
                 () -> UserNotFoundException.byId(command.id())
         );
-        if (user.getPassword() != null) {
+        if (!user.getPassword().isEmpty()) {
             throw new AlreadySetInitialUserPassword();
         }
         user.setInitialPassword(command.initialPassword());
