@@ -2,7 +2,7 @@ package com.sprintforge.identity.role.infrastructure.adapter.in.rest.controller;
 
 import com.sprintforge.identity.role.application.port.result.RoleGeneralReportResult;
 import com.sprintforge.identity.role.application.service.GetRoleGeneralReportImpl;
-import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.RoleGeneralReportDTO;
+import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.RoleGeneralReportResponseDTO;
 import com.sprintforge.identity.role.infrastructure.adapter.in.rest.mapper.InternalRestMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ public class InternalRoleController {
     private final GetRoleGeneralReportImpl getRoleGeneralReport;
 
     @GetMapping("/general-report")
-    public RoleGeneralReportDTO getGeneralReport() {
+    public RoleGeneralReportResponseDTO getGeneralReport() {
         RoleGeneralReportResult result = getRoleGeneralReport.handle(null);
         return InternalRestMapper.fromRoleGeneralReportResult(result);
     }
