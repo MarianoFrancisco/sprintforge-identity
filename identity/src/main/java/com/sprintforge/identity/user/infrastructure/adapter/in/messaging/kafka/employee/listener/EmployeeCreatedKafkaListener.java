@@ -2,9 +2,9 @@ package com.sprintforge.identity.user.infrastructure.adapter.in.messaging.kafka.
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sprintforge.common.infrastructure.adapter.in.messaging.kafka.employee.event.EmployeeCreatedKafkaMessage;
 import com.sprintforge.identity.user.application.port.in.event.employeecreated.EmployeeCreatedEventHandler;
 import com.sprintforge.identity.user.application.port.in.event.employeecreated.EmployeeCreatedIntegrationEvent;
-import com.sprintforge.identity.user.infrastructure.adapter.in.messaging.kafka.employee.event.EmployeeCreatedKafkaMessage;
 import com.sprintforge.identity.user.infrastructure.adapter.in.messaging.kafka.employee.mapper.EmployeeCreatedKafkaMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
