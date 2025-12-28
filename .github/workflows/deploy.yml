@@ -22,6 +22,7 @@ jobs:
           echo "KAFKA_HOST=${{ secrets.KAFKA_HOST }}" >> $GITHUB_ENV
           echo "EUREKA_HOSTNAME=${{ secrets.EUREKA_HOSTNAME }}" >> $GITHUB_ENV
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+          echo "PUBLIC_HOST=${{ secrets.PUBLIC_HOST }}" >> $GITHUB_ENV
 
       - name: Set up SSH
         run: |
@@ -66,5 +67,6 @@ jobs:
               -e KAFKA_HOST="${KAFKA_HOST}" \
               -e EUREKA_HOSTNAME="${EUREKA_HOSTNAME}" \
               -e JWT_SECRET="${JWT_SECRET}" \
+              -e PUBLIC_HOST="${PUBLIC_HOST}" \
               sprintforge-identity
           EOF
