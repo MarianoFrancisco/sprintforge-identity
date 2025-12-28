@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
 RUN git clone https://github.com/MarianoFrancisco/sprintforge-common.git
-WORKDIR /app/sprintforge-common
+WORKDIR /app/sprintforge-common/common
 RUN mvn -DskipTests install
 
 WORKDIR /app
