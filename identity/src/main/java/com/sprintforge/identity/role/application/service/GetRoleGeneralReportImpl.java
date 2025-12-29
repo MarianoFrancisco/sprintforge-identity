@@ -1,9 +1,9 @@
 package com.sprintforge.identity.role.application.service;
 
+import com.sprintforge.common.application.port.result.RoleGeneralReportResult;
 import com.sprintforge.identity.role.application.port.in.query.GetGeneralRoleReport;
 import com.sprintforge.identity.role.application.port.in.query.GetGeneralRoleReportQuery;
 import com.sprintforge.identity.role.application.port.out.persistence.LoadRoleGeneralReport;
-import com.sprintforge.identity.role.application.port.result.RoleGeneralReportResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

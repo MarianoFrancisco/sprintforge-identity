@@ -1,9 +1,9 @@
 package com.sprintforge.identity.role.infrastructure.adapter.out.persistence;
 
+import com.sprintforge.common.application.port.result.RoleBlock;
+import com.sprintforge.common.application.port.result.RoleGeneralReportResult;
+import com.sprintforge.common.application.port.result.RoleUserRow;
 import com.sprintforge.identity.role.application.port.out.persistence.LoadRoleGeneralReport;
-import com.sprintforge.identity.role.application.port.result.RoleBlock;
-import com.sprintforge.identity.role.application.port.result.RoleGeneralReportResult;
-import com.sprintforge.identity.role.application.port.result.RoleUserRow;
 import com.sprintforge.identity.role.infrastructure.adapter.out.persistence.projection.RoleUsersReportView;
 import com.sprintforge.identity.role.infrastructure.adapter.out.persistence.repository.RoleReportJpaRepository;
 import lombok.RequiredArgsConstructor;

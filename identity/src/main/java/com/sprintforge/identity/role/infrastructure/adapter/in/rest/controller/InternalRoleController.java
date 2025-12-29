@@ -1,8 +1,8 @@
 package com.sprintforge.identity.role.infrastructure.adapter.in.rest.controller;
 
-import com.sprintforge.identity.role.application.port.result.RoleGeneralReportResult;
+import com.sprintforge.common.application.port.result.RoleGeneralReportResult;
+import com.sprintforge.common.infrastructure.adapter.in.rest.dto.RoleGeneralReportResponseDTO;
 import com.sprintforge.identity.role.application.service.GetRoleGeneralReportImpl;
-import com.sprintforge.identity.role.infrastructure.adapter.in.rest.dto.RoleGeneralReportResponseDTO;
 import com.sprintforge.identity.role.infrastructure.adapter.in.rest.mapper.InternalRestMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
