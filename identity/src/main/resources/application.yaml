@@ -67,6 +67,7 @@ spring:
 
     topics:
       employee-created: ${KAFKA_TOPIC_EMPLOYEE_CREATED:employee.created}
+      email-verification-requested: ${TOPIC_EMAIL_VERIFICATION_REQUESTED:email.verification.requested}
 
     groups:
       default-group: ${spring.kafka.consumer.group-id}
@@ -82,6 +83,11 @@ security:
 
   password:
     bcrypt-strength: ${BCRYPT_STRENGTH:10}
+
+auth:
+  set-initial-password:
+    base-url: ${LINK_SET_INITIAL_PASSWORD_PATH:http://localhost:5763}
+    endpoint: ${SET_INITIAL_PASSWORD_PATH:/identity/set-initial-password}
 
 logging:
   level:

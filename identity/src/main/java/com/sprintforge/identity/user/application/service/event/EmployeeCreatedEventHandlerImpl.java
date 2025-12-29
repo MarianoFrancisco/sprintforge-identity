@@ -5,6 +5,8 @@ import com.sprintforge.identity.role.domain.Role;
 import com.sprintforge.identity.user.application.mapper.UserMapper;
 import com.sprintforge.identity.user.application.port.in.event.employeecreated.EmployeeCreatedEventHandler;
 import com.sprintforge.identity.user.application.port.in.event.employeecreated.EmployeeCreatedIntegrationEvent;
+import com.sprintforge.identity.user.application.port.out.event.EmailVerificationRequestedIntegrationEvent;
+import com.sprintforge.identity.user.application.port.out.event.NotificationEventPublisher;
 import com.sprintforge.identity.user.application.port.out.persistence.SaveUser;
 import com.sprintforge.identity.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +21,19 @@ public class EmployeeCreatedEventHandlerImpl implements EmployeeCreatedEventHand
     private final GetRoleByIsDefaultTrue getDefaultRole;
     private final SaveUser saveUser;
 
+    private final NotificationEventPublisher notificationEventPublisher;
+
     @Override
     public void handle(EmployeeCreatedIntegrationEvent event) {
         Role role = getDefaultRole.handle();
         User user = UserMapper.toDomain(event, role);
         User savedUser = saveUser.save(user);
+
+        notificationEventPublisher.publishEmailVerificationRequested(
+                new EmailVerificationRequestedIntegrationEvent(
+                        savedUser.getEmail().value(),
+                        savedUser.getId().value().toString()
+                )
+        );
     }
 }

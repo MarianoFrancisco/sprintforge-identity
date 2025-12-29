@@ -55,7 +55,6 @@ public class AuthRestMapper {
             SetInitialPasswordRequestDTO dto
     ) {
         return new SetInitialPasswordCommand(
-                dto.token(),
                 dto.userId(),
                 dto.newPassword()
         );
