@@ -7,5 +7,8 @@ import lombok.Setter;
 @Setter
 public class KafkaTopicsProperties {
     private String employeeCreated;
+    String employeeRetired;
+    String employeeSuspended;
+    String employeeReactivated;
     private String emailVerificationRequested;
 }

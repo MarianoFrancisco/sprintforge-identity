@@ -1,4 +1,4 @@
-package com.sprintforge.identity.user.application.port.in.event.employeecreated;
+package com.sprintforge.identity.user.application.port.in.event.employee;
 
 import java.util.UUID;
 
