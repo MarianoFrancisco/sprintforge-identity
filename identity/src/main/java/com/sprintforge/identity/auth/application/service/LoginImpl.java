@@ -40,7 +40,6 @@ public class LoginImpl implements Login {
     public TokenPairResult handle(LoginCommand command) {
         UserAuthDataResult userAuthData = getAndValidateUser(command);
 
-
         String refreshToken = refreshTokenGenerator.generate();
 
         Instant now = clock.instant();

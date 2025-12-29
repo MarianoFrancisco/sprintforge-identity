@@ -1,19 +1,17 @@
 package com.sprintforge.identity.auth.infrastructure.adapter.in.rest.controller;
 
-import com.sprintforge.identity.auth.application.port.in.command.Login;
-import com.sprintforge.identity.auth.application.port.in.command.Logout;
-import com.sprintforge.identity.auth.application.port.in.command.RefreshToken;
-import com.sprintforge.identity.auth.application.port.in.command.SetInitialPassword;
+import com.sprintforge.identity.auth.application.port.in.command.*;
 import com.sprintforge.identity.auth.application.port.in.result.TokenPairResult;
 import com.sprintforge.identity.auth.infrastructure.adapter.in.rest.dto.*;
 import com.sprintforge.identity.auth.infrastructure.adapter.in.rest.mapper.AuthRestMapper;
+import com.sprintforge.identity.auth.infrastructure.properties.AuthProperties;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +22,8 @@ public class AuthController {
     private final RefreshToken refreshToken;
     private final Logout logout;
     private final SetInitialPassword setInitialPassword;
+    private final VerifyEmail verifyEmail;
+    private final AuthProperties authProperties;
 
     @PostMapping("/login")
     public TokenPairResponseDTO login(
@@ -69,12 +69,20 @@ public class AuthController {
     }
 
     @PostMapping("/set-initial-password")
-
     public void setInitialPassword(
             @RequestBody @Valid SetInitialPasswordRequestDTO dto
     ) {
         setInitialPassword.handle(
                 AuthRestMapper.toSetInitialPasswordCommand(dto)
         );
+    }
+
+    @GetMapping("/verify-email")
+    public void verifyEmail(
+            @RequestParam("token") String token,
+            HttpServletResponse response
+    ) throws IOException {
+        verifyEmail.handle(new VerifyEmailCommand(token));
+        response.sendRedirect(authProperties.buildLink(token));
     }
 }

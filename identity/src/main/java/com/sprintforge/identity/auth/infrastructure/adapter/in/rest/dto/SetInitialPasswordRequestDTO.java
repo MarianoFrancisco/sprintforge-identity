@@ -1,15 +1,12 @@
 package com.sprintforge.identity.auth.infrastructure.adapter.in.rest.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import java.util.UUID;
 
 public record SetInitialPasswordRequestDTO(
-        @NotNull(message = "El token es obligatorio")
-        String token,
         UUID userId,
         @NotBlank(message = "La nueva contraseña es obligatoria")
         @Size(min = 8, max = 255, message = "La contraseña debe tener entre 8 y 255 caracteres")
