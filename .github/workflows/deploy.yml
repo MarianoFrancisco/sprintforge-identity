@@ -23,6 +23,7 @@ jobs:
           echo "EUREKA_HOSTNAME=${{ secrets.EUREKA_HOSTNAME }}" >> $GITHUB_ENV
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
           echo "PUBLIC_HOST=${{ secrets.PUBLIC_HOST }}" >> $GITHUB_ENV
+          echo "LINK_SET_INITIAL_PASSWORD_PATH=${{ secrets.LINK_SET_INITIAL_PASSWORD_PATH }}" >> $GITHUB_ENV
 
       - name: Set up SSH
         run: |
@@ -68,5 +69,6 @@ jobs:
               -e EUREKA_HOSTNAME="${EUREKA_HOSTNAME}" \
               -e JWT_SECRET="${JWT_SECRET}" \
               -e PUBLIC_HOST="${PUBLIC_HOST}" \
+              -e LINK_SET_INITIAL_PASSWORD_PATH="${LINK_SET_INITIAL_PASSWORD_PATH}" \
               sprintforge-identity
           EOF
