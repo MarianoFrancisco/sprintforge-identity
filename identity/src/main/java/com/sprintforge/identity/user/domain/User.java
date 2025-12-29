@@ -128,8 +128,8 @@ public class User {
     }
 
     public void deactivate() {
-        if (this.status.equals(UserStatus.DISABLED)) {
-            throw new ValidationException("No se puede desactivar un usuario deshabilitado");
+        if (this.status.equals(UserStatus.LOCKED)) {
+            throw new ValidationException("No se puede desactivar un usuario retirado");
         }
         if (!this.status.equals(UserStatus.ACTIVE)) {
             throw new ValidationException("El usuario ya está inactivo");
@@ -139,8 +139,8 @@ public class User {
     }
 
     public void activate() {
-        if (this.status.equals(UserStatus.DISABLED)) {
-            throw new ValidationException("No se puede activar un usuario deshabilitado");
+        if (this.status.equals(UserStatus.LOCKED)) {
+            throw new ValidationException("No se puede activar un usuario retirado");
         }
         if (this.status.equals(UserStatus.ACTIVE)) {
             throw new ValidationException("El usuario ya está activo");
@@ -149,11 +149,11 @@ public class User {
         this.updatedAt = now();
     }
 
-    public void disable() {
-        if (this.status.equals(UserStatus.DISABLED)) {
-            throw new ValidationException("El usuario ya está deshabilitado");
+    public void lock() {
+        if (this.status.equals(UserStatus.LOCKED)) {
+            throw new ValidationException("El usuario ya está bloqueado");
         }
-        this.status = UserStatus.DISABLED;
+        this.status = UserStatus.LOCKED;
         this.updatedAt = now();
     }
 

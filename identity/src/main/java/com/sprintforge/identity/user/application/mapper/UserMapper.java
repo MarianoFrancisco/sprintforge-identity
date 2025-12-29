@@ -1,7 +1,7 @@
 package com.sprintforge.identity.user.application.mapper;
 
 import com.sprintforge.identity.role.domain.Role;
-import com.sprintforge.identity.user.application.port.in.event.employeecreated.EmployeeCreatedIntegrationEvent;
+import com.sprintforge.identity.user.application.port.in.event.employee.EmployeeCreatedIntegrationEvent;
 import com.sprintforge.identity.user.domain.User;
 import lombok.experimental.UtilityClass;
 
