@@ -131,6 +131,9 @@ public class User {
         if (this.status.equals(UserStatus.LOCKED)) {
             throw new ValidationException("No se puede desactivar un usuario retirado");
         }
+        if (this.status.equals(UserStatus.DISABLED)) {
+            throw new ValidationException("El usuario ya está desactivado");
+        }
         this.status = UserStatus.DISABLED;
         this.updatedAt = now();
     }
