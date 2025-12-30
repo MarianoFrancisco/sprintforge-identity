@@ -1,6 +1,8 @@
 package com.sprintforge.identity.auth.application.service;
 
+import com.sprintforge.identity.auth.application.exception.EmailNotVerifiedException;
 import com.sprintforge.identity.auth.application.exception.InvalidCredentialsException;
+import com.sprintforge.identity.auth.application.exception.PasswordNotSetException;
 import com.sprintforge.identity.auth.application.mapper.AuthSessionMapper;
 import com.sprintforge.identity.auth.application.mapper.TokenPairResultMapper;
 import com.sprintforge.identity.auth.application.policy.TokenPolicy;
@@ -78,6 +80,13 @@ public class LoginImpl implements Login {
         ).orElseThrow(
                 InvalidCredentialsException::new
         );
+
+        if (userAuthData.status().equals(UserStatus.PENDING_ACTIVATION.name())) {
+            throw new EmailNotVerifiedException();
+        }
+        if (userAuthData.password() == null) {
+            throw new PasswordNotSetException(userAuthData.userId().toString());
+        }
         if (
                 !passwordVerifier.matches(command.password(), userAuthData.password())
                         || !UserStatus.ACTIVE.name().equals(userAuthData.status())

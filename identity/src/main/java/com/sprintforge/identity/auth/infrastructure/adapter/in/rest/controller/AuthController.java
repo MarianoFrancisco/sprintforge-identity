@@ -83,6 +83,6 @@ public class AuthController {
             HttpServletResponse response
     ) throws IOException {
         verifyEmail.handle(new VerifyEmailCommand(token));
-        response.sendRedirect(authProperties.buildLink(token));
+        response.sendRedirect(authProperties.buildInitialPasswordUrl(token));
     }
 }
