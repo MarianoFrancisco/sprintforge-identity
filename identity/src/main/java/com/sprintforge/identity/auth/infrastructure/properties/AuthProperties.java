@@ -14,7 +14,7 @@ public class AuthProperties {
     private String baseUrl;
     private String endpoint;
 
-    public String buildLink(String token) {
+    public String buildInitialPasswordUrl(String token) {
         return baseUrl + endpoint + "/" + token;
     }
 }
